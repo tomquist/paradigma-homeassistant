@@ -7,7 +7,7 @@ from homeassistant.core import callback
 from homeassistant.const import CONF_HOST, CONF_PORT, CONF_NAME, CONF_SCAN_INTERVAL
 from .const import (
     DOMAIN, DEFAULT_PORT, DEFAULT_SLAVE_ID, CONF_SLAVE_ID, DEFAULT_SCAN_INTERVAL,
-    CONF_SOLAR, CONF_HK2, CONF_POOL, CONF_ROOM, CONF_BOILER, CONF_WOOD, DEFAULT_NAME
+    CONF_SOLAR, CONF_HK2, CONF_POOL, CONF_ROOM, CONF_BOILER, CONF_WOOD, CONF_EMS, DEFAULT_NAME
 )
 from .hub import ParadigmaHub
 
@@ -48,6 +48,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional(CONF_WOOD, default=False): bool,
                 vol.Optional(CONF_ROOM, default=False): bool,
                 vol.Optional(CONF_POOL, default=False): bool,
+                vol.Optional(CONF_EMS, default=False): bool,
                 vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
             }),
             errors=errors,
@@ -86,6 +87,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                 vol.Optional(CONF_WOOD, default=data.get(CONF_WOOD, False)): bool,
                 vol.Optional(CONF_ROOM, default=data.get(CONF_ROOM, False)): bool,
                 vol.Optional(CONF_POOL, default=data.get(CONF_POOL, False)): bool,
+                vol.Optional(CONF_EMS, default=data.get(CONF_EMS, False)): bool,
                 vol.Optional(CONF_SCAN_INTERVAL, default=data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)): int,
             }),
         )

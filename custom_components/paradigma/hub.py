@@ -21,48 +21,50 @@ class ParadigmaHub:
         with self._lock:
             self._client.close()
 
-    def _read_modbus(self, func_name, address, count):
+    def _read_modbus(self, func_name, address, count, unit_id=None):
         """Helper to try device_id, slave, and unit."""
+        device = self._slave_id if unit_id is None else int(unit_id)
         func = getattr(self._client, func_name)
         with self._lock:
             try:
                 try:
-                    res = func(address=address, count=count, device_id=self._slave_id)
+                    res = func(address=address, count=count, device_id=device)
                 except TypeError:
                     try:
-                        res = func(address, count, slave=self._slave_id)
+                        res = func(address, count, slave=device)
                     except TypeError:
-                        res = func(address, count, unit=self._slave_id)
-                
+                        res = func(address, count, unit=device)
+
                 if res.isError(): return None
                 return res
             except Exception:
                 return None
 
-    def read_input_registers(self, address, count):
-        res = self._read_modbus("read_input_registers", address, count)
+    def read_input_registers(self, address, count, unit_id=None):
+        res = self._read_modbus("read_input_registers", address, count, unit_id)
         return res.registers if res else None
 
-    def read_holding_registers(self, address, count):
-        res = self._read_modbus("read_holding_registers", address, count)
+    def read_holding_registers(self, address, count, unit_id=None):
+        res = self._read_modbus("read_holding_registers", address, count, unit_id)
         return res.registers if res else None
 
-    def read_coils(self, address, count):
-        res = self._read_modbus("read_coils", address, count)
+    def read_coils(self, address, count, unit_id=None):
+        res = self._read_modbus("read_coils", address, count, unit_id)
         return res.bits if res else None
 
-    def write_register(self, address, value):
+    def write_register(self, address, value, unit_id=None):
         """Write Single Register - Forced as Multiple (FC 0x10)."""
+        device = self._slave_id if unit_id is None else int(unit_id)
         with self._lock:
             try:
                 try:
-                    res = self._client.write_registers(address=address, values=[value], device_id=self._slave_id)
+                    res = self._client.write_registers(address=address, values=[value], device_id=device)
                 except TypeError:
                     try:
-                        res = self._client.write_registers(address, [value], slave=self._slave_id)
+                        res = self._client.write_registers(address, [value], slave=device)
                     except TypeError:
-                        res = self._client.write_registers(address, [value], unit=self._slave_id)
-                
+                        res = self._client.write_registers(address, [value], unit=device)
+
                 return not res.isError()
             except Exception as e:
                 _LOGGER.error(f"Fehler beim Schreiben (Register {address}): {e}")
