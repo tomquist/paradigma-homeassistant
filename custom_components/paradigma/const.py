@@ -15,5 +15,9 @@ CONF_POOL = "pool_installed"
 CONF_ROOM = "room_sensor_installed"
 CONF_BOILER = "boiler_installed"
 CONF_WOOD = "wood_installed"
+CONF_EMS = "ems_installed"
 
-PLATFORMS = [Platform.SENSOR, Platform.NUMBER, Platform.SWITCH, Platform.WATER_HEATER]
+# Unit ID 2: EMS-Schnittstelle (Wärmepumpe / EzeeMaster) des SystaSmartC II
+EMS_UNIT_ID = 2
+
+PLATFORMS = [Platform.SENSOR, Platform.NUMBER, Platform.SELECT, Platform.SWITCH, Platform.WATER_HEATER]

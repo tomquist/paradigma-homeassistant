@@ -1,11 +1,11 @@
 """Sensors for Paradigma."""
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
-from homeassistant.const import UnitOfTemperature, UnitOfEnergy, UnitOfPower, UnitOfTime
+from homeassistant.const import UnitOfTemperature, UnitOfEnergy, UnitOfPower, UnitOfTime, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator
 from homeassistant.helpers.entity import DeviceInfo
 from datetime import timedelta
 import logging
-from .const import DOMAIN, CONF_SOLAR, CONF_HK2, CONF_POOL, CONF_ROOM, CONF_BOILER, CONF_WOOD
+from .const import DOMAIN, CONF_SOLAR, CONF_HK2, CONF_POOL, CONF_ROOM, CONF_BOILER, CONF_WOOD, CONF_EMS, EMS_UNIT_ID
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -98,6 +98,12 @@ SENSOR_DEFINITIONS = [
     ("status_boiler", None, None, 1, "holding_status_boiler", 41, CONF_BOILER),
     ("status_pellet", None, None, 1, "holding_status_pellet", 42, CONF_WOOD),
     ("status_wood", None, None, 1, "holding_status_wood", 43, CONF_WOOD),
+
+    # EMS-Schnittstelle Wärmepumpe (Unit ID 2)
+    ("ems_hp_power", UnitOfPower.WATT, SensorDeviceClass.POWER, 1.0, "ems", 1, CONF_EMS),
+    ("ems_heater_rod_power", UnitOfPower.WATT, SensorDeviceClass.POWER, 1.0, "ems", 7, CONF_EMS),
+    ("ems_model_id", None, None, 1.0, "ems_model", 4, CONF_EMS),
+    ("ems_sw_version", None, None, 1.0, "ems_version", 5, CONF_EMS),
 ]
 
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -161,7 +167,15 @@ class ParadigmaDataCoordinator(DataUpdateCoordinator):
                     data[f"holding_32_{off}"] = combined
             except Exception as e:
                 _LOGGER.error(f"Fehler beim Lesen des 32-Bit Registers {off}: {e}")
-            
+
+        # EMS-Schnittstelle Wärmepumpe (Unit ID 2)
+        if self.config.get(CONF_EMS):
+            for off in [1, 4, 5, 6, 7]:
+                val = await self.hass.async_add_executor_job(
+                    self.hub.read_holding_registers, off, 1, EMS_UNIT_ID
+                )
+                if val: data[f"ems_{off}"] = val[0]
+
         return data
 
 class ParadigmaSensor(CoordinatorEntity, SensorEntity):
@@ -186,13 +200,32 @@ class ParadigmaSensor(CoordinatorEntity, SensorEntity):
         else:
             self._attr_state_class = None
 
+        if self._type in ["ems_model", "ems_version"]:
+            self._attr_entity_category = EntityCategory.DIAGNOSTIC
+
     @property
     def device_info(self):
         return DeviceInfo(identifiers={(DOMAIN, self._entry_id)}, name="Paradigma Heizung", manufacturer="Paradigma", model="SystaSmartC II")
 
     @property
     def native_value(self):
-        if "input" in self._type:
+        if self._type == "ems_version":
+            # Reg5 = Major*100 + Minor, Reg6 Highbyte = Patch -> z.B. V 1.09.66
+            reg5 = self.coordinator.data.get("ems_5")
+            reg6 = self.coordinator.data.get("ems_6")
+            if reg5 is None or reg6 is None or reg5 in [0x8000, 0xFFFF]:
+                return None
+            return f"V {reg5 // 100}.{reg5 % 100:02d}.{(reg6 >> 8) & 0xFF:02d}"
+
+        if self._type == "ems_model":
+            raw = self.coordinator.data.get(f"ems_{self._reg_idx}")
+            if raw is None or raw in [0x8000, 0xFFFF]:
+                return None
+            return f"0x{raw:04X}"
+
+        if "ems" in self._type:
+            key = f"ems_{self._reg_idx}"
+        elif "input" in self._type:
             key = f"input_{self._reg_idx}"
         elif "holding_32" in self._type:
             key = f"holding_32_{self._reg_idx}"

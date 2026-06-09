@@ -13,6 +13,7 @@
           "room_sensor_installed": "Room Sensors Installed",
           "boiler_installed": "Boiler (Gas/Oil) Installed",
           "wood_installed": "Wood/Pellet Boiler Installed",
+          "ems_installed": "Heat Pump EMS Interface (Unit ID 2)",
           "scan_interval": "Update Interval (Seconds)"
         }
       }
@@ -35,6 +36,7 @@
           "room_sensor_installed": "Room Sensors Installed",
           "boiler_installed": "Boiler (Gas/Oil) Installed",
           "wood_installed": "Wood/Pellet Boiler Installed",
+          "ems_installed": "Heat Pump EMS Interface (Unit ID 2)",
           "scan_interval": "Update Interval (Seconds)"
         }
       }
@@ -45,7 +47,17 @@
       "setpoint_flow_hk1": { "name": "Setpoint Flow HK1" },
       "setpoint_flow_hk2": { "name": "Setpoint Flow HK2" },
       "setpoint_buffer_top": { "name": "Setpoint Buffer Top" },
-      "setpoint_boiler": { "name": "Setpoint Boiler" }
+      "setpoint_boiler": { "name": "Setpoint Boiler" },
+      "ems_pv_surplus": { "name": "PV Surplus for Heat Pump" },
+      "ems_power_limit": { "name": "Grid Operator Power Limit" }
+    },
+    "select": {
+      "ems_tariff_signal": {
+        "name": "Tariff Signal",
+        "state": {
+          "no_control": "No Tariff Control", "high_tariff": "High Tariff", "low_tariff": "Low Tariff"
+        }
+      }
     },
     "switch": {
       "dhw_enable": { "name": "DHW Enable" },
@@ -134,7 +146,11 @@
         "state": {
           "off": "Off", "standby": "Standby", "ignition": "Ignition", "burning": "Burning", "test": "Test", "runon": "Run-on", "cleaning": "Cleaning", "error": "Error", "unknown": "Unknown"
         }
-      }
+      },
+      "ems_hp_power": { "name": "Heat Pump Power (incl. Heater Rod)" },
+      "ems_heater_rod_power": { "name": "Heater Rod Power" },
+      "ems_model_id": { "name": "Model ID" },
+      "ems_sw_version": { "name": "Software Version" }
     }
   }
 }

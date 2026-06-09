@@ -13,6 +13,7 @@
           "room_sensor_installed": "Raumfühler vorhanden",
           "boiler_installed": "Kessel (Gas/Öl) vorhanden",
           "wood_installed": "Holz/Pellet Kessel vorhanden",
+          "ems_installed": "EMS-Schnittstelle Wärmepumpe (Unit ID 2)",
           "scan_interval": "Abfrageintervall (Sekunden)"
         }
       }
@@ -35,6 +36,7 @@
           "room_sensor_installed": "Raumfühler vorhanden",
           "boiler_installed": "Kessel (Gas/Öl) vorhanden",
           "wood_installed": "Holz/Pellet Kessel vorhanden",
+          "ems_installed": "EMS-Schnittstelle Wärmepumpe (Unit ID 2)",
           "scan_interval": "Abfrageintervall (Sekunden)"
         }
       }
@@ -45,7 +47,17 @@
       "setpoint_flow_hk1": { "name": "Soll-Vorlauf HK1" },
       "setpoint_flow_hk2": { "name": "Soll-Vorlauf HK2" },
       "setpoint_buffer_top": { "name": "Soll Puffer Oben" },
-      "setpoint_boiler": { "name": "Soll Kessel" }
+      "setpoint_boiler": { "name": "Soll Kessel" },
+      "ems_pv_surplus": { "name": "PV-Überschuss für Wärmepumpe" },
+      "ems_power_limit": { "name": "Leistungsbegrenzung Netzbetreiber" }
+    },
+    "select": {
+      "ems_tariff_signal": {
+        "name": "Tarifsignal",
+        "state": {
+          "no_control": "Keine Tarifsteuerung", "high_tariff": "Hochtarif", "low_tariff": "Niedertarif"
+        }
+      }
     },
     "switch": {
       "dhw_enable": { "name": "Warmwasser Freigabe" },
@@ -134,7 +146,11 @@
         "state": {
           "off": "Aus", "standby": "Standby", "ignition": "Anheizen", "burning": "Leistungsbrand", "test": "Test Abgasklappe", "runon": "Nachlauf", "cleaning": "Reinigung", "error": "Störung", "unknown": "Unbekannt"
         }
-      }
+      },
+      "ems_hp_power": { "name": "Leistungsaufnahme Wärmepumpe (inkl. Heizstab)" },
+      "ems_heater_rod_power": { "name": "Leistungsaufnahme Heizstab" },
+      "ems_model_id": { "name": "Modellkennung" },
+      "ems_sw_version": { "name": "Softwareversion" }
     }
   }
 }

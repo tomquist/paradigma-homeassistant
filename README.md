@@ -56,6 +56,12 @@ The integration connects to the heating controller (Unit ID 1) and provides a fu
 * **DHW Enable:** Enable/Disable hot water preparation globally.
 * **Circulation Enable:** Enable/Disable circulation pump globally.
 
+#### ⚡ Heat Pump EMS Interface (Unit ID 2, optional)
+The SystaSmartC II exposes additional registers on **Unit ID 2** for communication with an Energy Management System (EMS, e.g. EzeeMaster). When enabled, Home Assistant can act as the EMS:
+* **Sensors:** Heat Pump power consumption (incl. heater rod), Heater Rod power, Model ID, Software Version.
+* **Controls:** Send **PV Surplus** (W) to the heat pump, send the **Tariff Signal** (No Control / High Tariff / Low Tariff), and a Grid Operator Power Limit (disabled by default, reserved for future use).
+* Note: The writable registers are write-only per the Paradigma specification, so these entities show the last value written from Home Assistant.
+
 ### Installation via HACS
 
 1.  Open **HACS** in Home Assistant.
@@ -73,7 +79,7 @@ The integration connects to the heating controller (Unit ID 1) and provides a fu
     * **Port:** Default is `502`.
     * **Unit ID:** Default is `1`.
 4.  **Select your installed components:**
-    * Check the boxes for **Solar**, **Heating Circuit 2**, **Pool**, **Room Sensors**, **Boiler**, or **Wood/Pellet** to enable the respective sensors.
+    * Check the boxes for **Solar**, **Heating Circuit 2**, **Pool**, **Room Sensors**, **Boiler**, **Wood/Pellet**, or the **Heat Pump EMS Interface** to enable the respective entities.
 
 > **Note:** You can change these settings at any time by clicking **"Configure"** on the integration entry.
 
@@ -113,6 +119,12 @@ Die Integration verbindet sich mit dem Heizungsregler (Unit ID 1) und bietet ein
 * **Warmwasser Freigabe:** Ein-/Ausschalten der Warmwasserbereitung (DHW Enable).
 * **Zirkulation Freigabe:** Ein-/Ausschalten der Zirkulationspumpe (Circ Enable).
 
+#### ⚡ EMS-Schnittstelle Wärmepumpe (Unit ID 2, optional)
+Das SystaSmartC II stellt unter der **Unit ID 2** zusätzliche Register für die Kommunikation mit einem Energiemanagementsystem (EMS, z.B. EzeeMaster) bereit. Bei Aktivierung kann Home Assistant die Rolle des EMS übernehmen:
+* **Sensoren:** Leistungsaufnahme Wärmepumpe (inkl. Heizstab), Leistungsaufnahme Heizstab, Modellkennung, Softwareversion.
+* **Steuerung:** Senden des **PV-Überschusses** (W) an die Wärmepumpe, Senden des **Tarifsignals** (Keine Tarifsteuerung / Hochtarif / Niedertarif) sowie eine Leistungsbegrenzung des Netzbetreibers (standardmäßig deaktiviert, für zukünftige Verwendung).
+* Hinweis: Die schreibbaren Register sind laut Paradigma-Spezifikation nur schreibbar; die Entitäten zeigen daher den zuletzt von Home Assistant geschriebenen Wert an.
+
 ### Installation über HACS
 
 1.  Öffnen Sie **HACS** in Home Assistant.
@@ -130,7 +142,7 @@ Die Integration verbindet sich mit dem Heizungsregler (Unit ID 1) und bietet ein
     * **Port:** Standard ist `502`.
     * **Unit ID:** Standard ist `1`.
 4.  **Wählen Sie Ihre installierten Komponenten:**
-    * Setzen Sie Haken bei **Solar**, **Heizkreis 2**, **Pool**, **Raumfühler**, **Kessel** oder **Holz/Pellet**, um die entsprechenden Sensoren zu aktivieren.
+    * Setzen Sie Haken bei **Solar**, **Heizkreis 2**, **Pool**, **Raumfühler**, **Kessel**, **Holz/Pellet** oder der **EMS-Schnittstelle Wärmepumpe**, um die entsprechenden Entitäten zu aktivieren.
 
 > **Hinweis:** Sie können diese Einstellungen jederzeit nachträglich ändern, indem Sie bei der Integration auf **"Konfigurieren"** klicken.
 
