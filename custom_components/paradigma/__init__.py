@@ -6,6 +6,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
 from .const import DOMAIN, CONF_SLAVE_ID, PLATFORMS
 from .hub import ParadigmaHub
+from .migration import async_migrate_entry  # noqa: F401 -- Home Assistant hook
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})

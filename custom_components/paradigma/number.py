@@ -1,4 +1,5 @@
 """Number platform for Paradigma."""
+from .entity_ids import bridge_unique_id
 from homeassistant.components.number import NumberEntity, NumberDeviceClass, NumberMode
 from homeassistant.const import UnitOfPower
 from homeassistant.helpers.entity import DeviceInfo
@@ -37,7 +38,7 @@ class ParadigmaNumber(NumberEntity):
         self._entry_id = entry.entry_id
         self._attr_has_entity_name = True
         self._attr_translation_key = key
-        self._attr_unique_id = f"{entry.entry_id}_num_{address}"
+        self._attr_unique_id = bridge_unique_id(entry.entry_id, "number", f"num_{address}")
         self._attr_native_min_value = min_val
         self._attr_native_max_value = max_val
         self._attr_native_step = step
@@ -71,7 +72,7 @@ class ParadigmaEmsNumber(NumberEntity):
         self._entry_id = entry.entry_id
         self._attr_has_entity_name = True
         self._attr_translation_key = key
-        self._attr_unique_id = f"{entry.entry_id}_ems_num_{address}"
+        self._attr_unique_id = bridge_unique_id(entry.entry_id, "number", f"ems_num_{address}")
         self._attr_native_min_value = min_val
         self._attr_native_max_value = max_val
         self._attr_native_step = 1
