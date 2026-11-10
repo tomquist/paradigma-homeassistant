@@ -1,0 +1,38 @@
+{
+  "repository": "nussfuellung/paradigma-homeassistant",
+  "tag": "V2.6.2",
+  "commit": "5db9299fca3a67680a57e9ff0fa8e281ffe7717a",
+  "sensor_keys": [
+    "outdoor_temp", "flow_hk1", "return_hk1", "dhw_temp", "buffer_top", "buffer_bottom",
+    "circ_return_temp", "room_temp_hk1", "room_temp_hk2", "target_buffer_top", "target_boiler",
+    "heat_dhw", "heat_circ", "flow_hk2", "return_hk2", "boiler_flow", "boiler_return",
+    "boiler_hours", "boiler_starts", "wood_flow", "wood_return", "wood_buffer_top",
+    "pellet_hours", "pellet_consumption", "collector_temp", "solar_outdoor_temp", "solar_power",
+    "solar_day", "solar_total", "pool_temp", "pool_flow", "pool_return", "ems_hp_power",
+    "ems_heater_power", "ems_model_id", "ems_sw_version", "error_code", "status_ww", "status_circ",
+    "status_hk1", "status_hk2", "status_solar", "status_pool", "status_boiler", "status_pellet", "status_wood"
+  ],
+  "number_suffixes": ["num_2_u1", "num_3_u1", "num_0_u2", "num_3_u2"],
+  "select_suffixes": ["select_tariff_u2"],
+  "expected_legacy_mappings": {
+    "sensor": {
+      "input_0": "outdoor_temp", "input_1": "flow_hk1", "input_2": "return_hk1",
+      "input_3": "dhw_temp", "input_4": "buffer_top", "input_5": "buffer_bottom",
+      "input_6": "circ_return_temp", "input_9": "room_temp_hk1", "input_10": "room_temp_hk2",
+      "input_7": "flow_hk2", "input_8": "return_hk2", "input_12": "boiler_flow",
+      "input_13": "boiler_return", "holding_32_27": "boiler_hours", "holding_32_29": "boiler_starts",
+      "input_14": "wood_flow", "input_15": "wood_return", "input_16": "wood_buffer_top",
+      "holding_32_31": "pellet_hours", "input_11": "collector_temp", "holding_19": "solar_power",
+      "holding_20": "solar_day", "holding_32_21": "solar_total", "input_19": "pool_temp",
+      "input_20": "pool_flow", "input_21": "pool_return", "holding_status_ww_34": "status_ww",
+      "holding_status_circ_35": "status_circ", "holding_status_hk_36": "status_hk1",
+      "holding_status_hk_37": "status_hk2", "holding_status_solar_39": "status_solar",
+      "holding_status_pool_40": "status_pool", "holding_status_boiler_41": "status_boiler",
+      "holding_status_pellet_42": "status_pellet", "holding_status_wood_43": "status_wood",
+      "ems_1": "ems_hp_power", "ems_7": "ems_heater_power", "ems_model_4": "ems_model_id",
+      "ems_version_5": "ems_sw_version"
+    },
+    "number": {"num_2": "num_2_u1", "num_3": "num_3_u1", "ems_num_0": "num_0_u2", "ems_num_3": "num_3_u2"},
+    "select": {"ems_select_2": "select_tariff_u2"}
+  }
+}
