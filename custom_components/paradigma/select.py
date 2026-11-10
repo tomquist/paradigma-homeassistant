@@ -1,4 +1,5 @@
 """Select platform for Paradigma (EMS-Schnittstelle Unit ID 2)."""
+from .entity_ids import bridge_unique_id
 from homeassistant.components.select import SelectEntity
 from homeassistant.helpers.entity import DeviceInfo
 from .const import DOMAIN, CONF_EMS, EMS_UNIT_ID
@@ -30,7 +31,7 @@ class ParadigmaTariffSelect(SelectEntity):
         self._entry_id = entry.entry_id
         self._attr_has_entity_name = True
         self._attr_translation_key = "ems_tariff_signal"
-        self._attr_unique_id = f"{entry.entry_id}_ems_select_{self._address}"
+        self._attr_unique_id = bridge_unique_id(entry.entry_id, "select", f"ems_select_{self._address}")
         self._attr_options = list(TARIFF_OPTIONS)
         self._attr_current_option = None
 

@@ -1,4 +1,5 @@
 """Sensors for Paradigma."""
+from .entity_ids import bridge_unique_id
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
 from homeassistant.const import UnitOfTemperature, UnitOfEnergy, UnitOfPower, UnitOfTime, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator
@@ -191,7 +192,7 @@ class ParadigmaSensor(CoordinatorEntity, SensorEntity):
         
         self._attr_has_entity_name = True
         self._attr_translation_key = self._key
-        self._attr_unique_id = f"{entry.entry_id}_{self._type}_{self._reg_idx}"
+        self._attr_unique_id = bridge_unique_id(entry.entry_id, "sensor", f"{self._type}_{self._reg_idx}")
         
         if self._dev_class == SensorDeviceClass.ENERGY:
             self._attr_state_class = SensorStateClass.TOTAL_INCREASING
